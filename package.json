@@ -1,0 +1,29 @@
+{
+  "name": "spotiq-smart-parking",
+  "private": true,
+  "version": "1.0.0",
+  "description": "High-contrast telemetry-driven smart parking and connected driver companion for Mysuru Smart City",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "node --import tsx/esm --test src/utils/parkingRules.test.ts src/utils/authValidation.test.ts",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.2.0"
+  }
+}
