@@ -71,14 +71,15 @@ export const SlotIndicator: React.FC<SlotIndicatorProps> = ({
           onSelect(slot);
         }
       }}
-      className={`relative h-24 rounded-2xl p-2.5 flex flex-col justify-between text-left transition-all select-none ${isSelected
-        ? 'bg-[#272a30] border-2 border-[#00e5ff] shadow-[0_0_24px_rgba(0,229,255,0.35)] scale-[1.02] cursor-pointer'
-        : isAvailable
+      className={`relative h-24 rounded-2xl p-2.5 flex flex-col justify-between text-left transition-all select-none ${
+        isSelected
+          ? 'bg-[#272a30] border-2 border-[#00e5ff] shadow-[0_0_24px_rgba(0,229,255,0.35)] scale-[1.02] cursor-pointer'
+          : isAvailable
           ? 'bg-[#191c21] hover:bg-[#1d2025] border border-[#aff833]/40 shadow-sm hover:border-[#aff833] cursor-pointer active:scale-[0.98]'
           : isReserved
-            ? 'bg-[#2D2311]/70 border border-[#ffb300]/30 opacity-80 cursor-not-allowed'
-            : 'bg-[#281418]/70 border border-[#ff5964]/30 opacity-85 cursor-not-allowed'
-        }`}
+          ? 'bg-[#2D2311]/70 border border-[#ffb300]/30 opacity-80 cursor-not-allowed'
+          : 'bg-[#281418]/70 border border-[#ff5964]/30 opacity-85 cursor-not-allowed'
+      }`}
     >
       {/* Top Banner Indicator */}
       {isSelected ? (
@@ -97,19 +98,21 @@ export const SlotIndicator: React.FC<SlotIndicatorProps> = ({
         </div>
       )}
 
-      {/* Header: Slot Code + Visual Status Indicator Dot/Badge */}
+      {/* Header: Slot Code + Real-time Visual Status Indicator Dot/Badge */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <span
-            className={`font-black tracking-tight ${isSelected ? 'text-[#00e5ff] text-base' : isAvailable ? 'text-[#aff833] text-sm' : 'text-[#e1e2ea] text-sm'
-              }`}
+            className={`font-black tracking-tight ${
+              isSelected ? 'text-[#00e5ff] text-base' : isAvailable ? 'text-[#aff833] text-sm' : 'text-[#e1e2ea] text-sm'
+            }`}
           >
             {slot.code}
           </span>
           {/* Visual Indicator LED Dot */}
           <span
-            className={`w-2.5 h-2.5 rounded-full ${meta.dotColor} ${isAvailable ? 'shadow-[0_0_8px_#aff833]' : isOccupied ? 'shadow-[0_0_8px_#ff5964]' : ''
-              }`}
+            className={`w-2.5 h-2.5 rounded-full ${meta.dotColor} ${
+              isAvailable ? 'shadow-[0_0_8px_#aff833]' : isOccupied ? 'shadow-[0_0_8px_#ff5964]' : ''
+            }`}
             title={`Status: ${meta.label}`}
           />
         </div>
@@ -192,7 +195,7 @@ export const SlotIndicator: React.FC<SlotIndicatorProps> = ({
         </span>
       </div>
 
-      {/* Quick local status switcher for prototype testing */}
+      {/* Quick Test Status Switcher (for evaluating real-time availability changes) */}
       {onToggleStatus && (
         <button
           type="button"
@@ -200,7 +203,7 @@ export const SlotIndicator: React.FC<SlotIndicatorProps> = ({
             e.stopPropagation();
             onToggleStatus(slot.id);
           }}
-          title="Simulate local demo status toggle (Vacant <-> Occupied)"
+          title="Simulate IoT sensor toggle (Vacant <-> Occupied)"
           className="absolute -bottom-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#32353b] hover:bg-[#36393f] text-[#bac9cc] flex items-center justify-center text-[10px] border border-white/10 opacity-70 hover:opacity-100 transition-opacity"
         >
           <span className="material-symbols-outlined text-[11px]">sync</span>

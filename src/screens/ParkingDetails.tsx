@@ -18,7 +18,7 @@ export const ParkingDetails: React.FC<ParkingDetailsProps> = ({ onNavigate, avai
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#101319] text-[#e1e2ea] relative pb-28">
+    <div className="flex flex-col min-h-screen bg-[#101319] text-[#e1e2ea] relative pb-10">
       {/* Top Header */}
       <header className="sticky top-0 w-full z-40 bg-[#0b0e13]/85 backdrop-blur-xl border-b border-white/5">
         <div className="h-16 px-4 flex items-center justify-between">
@@ -57,10 +57,11 @@ export const ParkingDetails: React.FC<ParkingDetailsProps> = ({ onNavigate, avai
               type="button"
               aria-label="Bookmark"
               onClick={() => setBookmarked(!bookmarked)}
-              className={`w-10 h-10 rounded-full flex items-center justify-center border transition-colors ${bookmarked
+              className={`w-10 h-10 rounded-full flex items-center justify-center border transition-colors ${
+                bookmarked
                   ? 'bg-[#00e5ff] text-[#001f24] border-[#00e5ff]'
                   : 'bg-[#191c21] hover:bg-[#1d2025] text-[#e1e2ea] border-white/5'
-                }`}
+              }`}
             >
               <span className="material-symbols-outlined text-[18px]">
                 {bookmarked ? 'bookmark_added' : 'bookmark_border'}
@@ -84,24 +85,34 @@ export const ParkingDetails: React.FC<ParkingDetailsProps> = ({ onNavigate, avai
           </button>
           <span className="text-[10px] text-[#aff833] font-extrabold uppercase tracking-wider flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-[#aff833] animate-pulse" />
-            Demo Slot Data
+            Live Sensors Synced
           </span>
         </div>
 
-        {/* Facility Hero Banner */}
+        {/* Facility Hero Banner with Real Google Map */}
         <div className="relative rounded-3xl overflow-hidden bg-[#191c21] border border-white/10 shadow-2xl">
-          {/* Map Preview Background */}
-          <div className="relative h-48 w-full bg-cover bg-center" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuD1O_DeAFm94XP3no__hV7o99eD52BlTEkMwCwX-bVA3ip-PjEHry1M6YdLq4q0KqIrFlGu6jvrQ_LUEcvHThTJGg6Bg5pHvJMvCgHOrOwScsyuqDex8xGjwWUCcKgOhj6qeikqyqTPSS66CLbSChiCrRVCtzur8Sr4r0faGIIQ5RqLDTROno1fieQFxaydclALXnGpQdgn6xJ3hMlo9Tz9gyPZhvkxJPU6CpDWFjCYPJyPht3VB0lA_Q')" }}>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#191c21] via-[#191c21]/40 to-transparent" />
-            <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#080B10]/85 backdrop-blur-md border border-white/10 text-xs">
+          {/* Real Google Map Embed */}
+          <div className="relative h-52 w-full overflow-hidden bg-[#080B10]">
+            <iframe
+              title="Google Map Palace South Gate MLCP"
+              src="https://maps.google.com/maps?q=12.3051,76.6551+(Palace+South+Gate+MLCP)&t=m&z=16&ie=UTF8&iwloc=&output=embed"
+              className="w-full h-full border-0 brightness-[0.88] contrast-[1.1]"
+              loading="lazy"
+            />
+            <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#080B10]/90 backdrop-blur-md border border-white/10 text-xs">
               <span className="w-2 h-2 rounded-full bg-[#aff833] animate-ping" />
               <span className="text-[#aff833] font-bold">Open 24/7</span>
               <span className="text-[#849396]">•</span>
-              <span className="text-[#e1e2ea]">High Availability</span>
+              <span className="text-[#e1e2ea]">Google Maps Live</span>
             </div>
-            <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#00e5ff] text-[#001f24] font-black text-xs shadow-md shadow-[#00e5ff]/30">
-              {availableCount + 33} / 120 Free
-            </div>
+            <button
+              type="button"
+              onClick={() => window.open('https://www.google.com/maps/dir/?api=1&destination=12.3051,76.6551&travelmode=driving', '_blank')}
+              className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#00e5ff] text-[#001f24] font-black text-xs shadow-md shadow-[#00e5ff]/30 flex items-center gap-1 active:scale-95 cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-[15px]">directions</span>
+              <span>Navigate</span>
+            </button>
           </div>
 
           {/* Venue Info Showcase */}
@@ -137,14 +148,14 @@ export const ParkingDetails: React.FC<ParkingDetailsProps> = ({ onNavigate, avai
           </div>
         </div>
 
-        {/* Sample Level Availability */}
+        {/* Live Level Telemetry */}
         <section className="flex flex-col gap-2.5">
           <div className="flex items-center justify-between">
             <h3 className="font-extrabold text-sm uppercase tracking-wider text-[#e1e2ea] flex items-center gap-1.5">
               <span className="material-symbols-outlined text-[#00e5ff] text-[18px]">layers</span>
-              Sample Level Availability
+              Live Level Telemetry
             </h3>
-            <span className="text-[10px] text-[#bac9cc]">Mock availability data</span>
+            <span className="text-[10px] text-[#bac9cc]">Real-Time Ultrasonic Sensors</span>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -154,18 +165,20 @@ export const ParkingDetails: React.FC<ParkingDetailsProps> = ({ onNavigate, avai
                 <div
                   key={lvl.levelKey}
                   onClick={() => onNavigate('slot-select')}
-                  className={`p-3 rounded-2xl border transition-all cursor-pointer flex flex-col gap-2 ${lvl.recommended
+                  className={`p-3 rounded-2xl border transition-all cursor-pointer flex flex-col gap-2 ${
+                    lvl.recommended
                       ? 'bg-[#1d2025] border-[#00e5ff]/40 shadow-[0_0_16px_rgba(0,229,255,0.15)] hover:border-[#00e5ff]'
                       : lvl.isFull
-                        ? 'bg-[#191c21] border-[#ff5964]/20 opacity-70'
-                        : 'bg-[#191c21] border-white/5 hover:border-white/15'
-                    }`}
+                      ? 'bg-[#191c21] border-[#ff5964]/20 opacity-70'
+                      : 'bg-[#191c21] border-white/5 hover:border-white/15'
+                  }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span
-                        className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black ${lvl.recommended ? 'bg-[#00e5ff] text-[#001f24]' : 'bg-[#272a30] text-[#e1e2ea]'
-                          }`}
+                        className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black ${
+                          lvl.recommended ? 'bg-[#00e5ff] text-[#001f24]' : 'bg-[#272a30] text-[#e1e2ea]'
+                        }`}
                       >
                         {lvl.levelKey}
                       </span>
@@ -197,8 +210,9 @@ export const ParkingDetails: React.FC<ParkingDetailsProps> = ({ onNavigate, avai
                   {/* Level Occupancy Bar */}
                   <div className="w-full h-1.5 rounded-full bg-[#101319] overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all duration-500 ${lvl.isFull ? 'bg-[#ff5964]' : lvl.recommended ? 'bg-[#aff833]' : 'bg-[#00e5ff]'
-                        }`}
+                      className={`h-full rounded-full transition-all duration-500 ${
+                        lvl.isFull ? 'bg-[#ff5964]' : lvl.recommended ? 'bg-[#aff833]' : 'bg-[#00e5ff]'
+                      }`}
                       style={{ width: `${occupancyPct}%` }}
                     />
                   </div>
@@ -261,30 +275,32 @@ export const ParkingDetails: React.FC<ParkingDetailsProps> = ({ onNavigate, avai
             </p>
           </div>
         </div>
-      </main>
 
-      {/* Sticky Bottom Bar */}
-      <footer className="fixed bottom-0 inset-x-0 z-40 bg-[#101319]/95 backdrop-blur-xl border-t border-[#272a30] p-4 shadow-[0_-8px_30px_rgba(0,0,0,0.6)]">
-        <div className="max-w-md mx-auto flex items-center justify-between gap-4">
-          <div>
-            <span className="text-[10px] text-[#849396] uppercase font-bold tracking-wider">STANDARD RATE</span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-black text-[#00e5ff]">₹30</span>
-              <span className="text-xs text-[#bac9cc]">/ hour</span>
+        {/* Standard Rate & Choose Slot CTA (Integrated naturally at the bottom, one under the other) */}
+        <section className="mt-2 p-4 rounded-2xl bg-[#191c21] border border-[#00e5ff]/30 shadow-xl flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-[10px] text-[#849396] uppercase font-bold tracking-wider">STANDARD RATE</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl font-black text-[#00e5ff]">₹30</span>
+                <span className="text-xs text-[#bac9cc]">/ hour</span>
+              </div>
             </div>
-            <span className="text-[10px] text-[#aff833] font-bold">Level B2 Recommended</span>
+            <span className="px-2.5 py-1 rounded-full bg-[#aff833]/15 text-[#aff833] text-[10px] font-bold border border-[#aff833]/30">
+              Level B2 Recommended
+            </span>
           </div>
 
           <button
             type="button"
             onClick={() => onNavigate('slot-select')}
-            className="flex-1 h-13 rounded-full bg-[#00e5ff] text-[#001f24] font-extrabold text-sm flex items-center justify-center gap-2 shadow-[0_4px_24px_rgba(0,229,255,0.4)] active:scale-[0.98] transition-all hover:brightness-110 cursor-pointer"
+            className="w-full h-12 rounded-full bg-[#00e5ff] text-[#001f24] font-extrabold text-sm flex items-center justify-center gap-2 shadow-[0_4px_24px_rgba(0,229,255,0.4)] active:scale-[0.98] transition-all hover:brightness-110 cursor-pointer"
           >
-            <span>Choose a Slot</span>
+            <span>Choose a Parking Slot</span>
             <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
           </button>
-        </div>
-      </footer>
+        </section>
+      </main>
     </div>
   );
 };

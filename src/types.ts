@@ -1,11 +1,10 @@
 import { ParkingSlot } from './utils/parkingRules.ts';
 
 export type ScreenId =
-  | 'welcome'
-  | 'driver-auth'
-  | 'owner-auth'
-  | 'owner-onboarding'
-  | 'owner-dashboard'
+  | 'mobile-auth-showcase'
+  | 'auth-driver'
+  | 'auth-renter'
+  | 'renter-dashboard'
   | 'journey'
   | 'slot-select'
   | 'parking-details'
@@ -14,50 +13,6 @@ export type ScreenId =
   | 'my-bookings'
   | 'driver-companion'
   | 'prototype-reel';
-
-export type UserRole = 'driver' | 'owner';
-
-export interface UserSession {
-  role: UserRole;
-  name: string;
-  email: string;
-  phone?: string;
-  isAuthenticated: boolean;
-}
-
-export interface OwnerSpaceListing {
-  id: string;
-  propertyTitle: string;
-  address: string;
-  landmark: string;
-  city: string;
-  postalCode: string;
-  spaceType: 'Driveway' | 'Covered Garage' | 'Underground Basement' | 'Open Commercial Lot';
-  allowedVehicles: string[];
-  amenities: string[];
-  totalBays: number;
-  availableBays: number;
-  operatingDays: string;
-  operatingHours: string;
-  ratePerHour: number;
-  dailyFlatRate?: number;
-  hasEvCharging: boolean;
-  evRatePerHour?: number;
-  status: 'active' | 'pending' | 'offline';
-  createdAt: string;
-}
-
-export interface OwnerBookingSummary {
-  id: string;
-  spaceTitle: string;
-  vehiclePlate: string;
-  driverName: string;
-  slotCode: string;
-  startTime: string;
-  durationHours: number;
-  earnings: number;
-  status: 'active' | 'completed' | 'reserved';
-}
 
 export interface Vehicle {
   id: string;

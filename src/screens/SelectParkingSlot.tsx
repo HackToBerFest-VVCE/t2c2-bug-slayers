@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScreenId } from '../types.ts';
-import { ParkingSlot, calculateParkingFee, isSlotBookable } from '../utils/parkingRules.ts';
+import { ParkingSlot, calculateParkingFee } from '../utils/parkingRules.ts';
 import { SlotIndicator } from '../components/SlotIndicator.tsx';
 
 interface SelectParkingSlotProps {
@@ -28,7 +28,6 @@ export const SelectParkingSlot: React.FC<SelectParkingSlotProps> = ({
 }) => {
   const currentSlots = slots.filter((s) => s.level === activeLevel);
   const openSlotsCount = currentSlots.filter((s) => s.status === 'available').length;
-  const selectedSlotIsBookable = slots.some((slot) => slot.id === selectedSlot.id && isSlotBookable(slot.status));
   const totalCost = calculateParkingFee(selectedSlot.ratePerHour || 30, durationHours);
 
   // Divide into left wing (B01-B06) and right wing (B07-B12)
@@ -36,7 +35,7 @@ export const SelectParkingSlot: React.FC<SelectParkingSlotProps> = ({
   const rightWingSlots = currentSlots.slice(Math.ceil(currentSlots.length / 2));
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#101319] text-[#e1e2ea] relative pb-32">
+    <div className="flex flex-col min-h-screen bg-[#101319] text-[#e1e2ea] relative pb-10">
       {/* Top App Header */}
       <header className="sticky top-0 w-full z-40 bg-[#0b0e13]/85 backdrop-blur-xl shadow-[0_1px_12px_rgba(0,0,0,0.5)] border-b border-white/5">
         <div className="h-16 px-4 flex items-center justify-between">
@@ -104,10 +103,11 @@ export const SelectParkingSlot: React.FC<SelectParkingSlotProps> = ({
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => onChangeLevel(lvl)}
-                className={`py-1.5 rounded-full text-xs transition-all font-semibold flex items-center justify-center gap-1 ${isSelected
-                  ? 'bg-[#00e5ff] text-[#001f24] font-extrabold shadow-md shadow-[#00e5ff]/20'
-                  : 'text-[#bac9cc] hover:text-[#e1e2ea]'
-                  }`}
+                className={`py-1.5 rounded-full text-xs transition-all font-semibold flex items-center justify-center gap-1 ${
+                  isSelected
+                    ? 'bg-[#00e5ff] text-[#001f24] font-extrabold shadow-md shadow-[#00e5ff]/20'
+                    : 'text-[#bac9cc] hover:text-[#e1e2ea]'
+                }`}
               >
                 <span>Level {lvl}</span>
                 {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#001f24]" />}
@@ -117,7 +117,7 @@ export const SelectParkingSlot: React.FC<SelectParkingSlotProps> = ({
         </div>
       </section>
 
-      {/* Color-coded mock status legend */}
+      {/* Real-Time Color-Coded Status Legend */}
       <section className="px-4 py-2 bg-[#101319] border-b border-white/5">
         <div className="flex items-center justify-between overflow-x-auto py-1 gap-2 no-scrollbar">
           <div className="flex items-center gap-1.5 shrink-0 px-2.5 py-1 rounded-full bg-[#191c21] border border-[#aff833]/20">
@@ -139,7 +139,7 @@ export const SelectParkingSlot: React.FC<SelectParkingSlotProps> = ({
         </div>
       </section>
 
-      {/* Driveway & interactive mock bay grid */}
+      {/* Driveway & Interactive Bay Grid Blueprint */}
       <main className="px-4 py-3 flex-1">
         {/* Directional Header */}
         <div className="flex items-center justify-between mb-2 px-1 text-[11px] text-[#bac9cc] font-semibold">
@@ -201,12 +201,9 @@ export const SelectParkingSlot: React.FC<SelectParkingSlotProps> = ({
         </div>
       </main>
 
-      {/* Floating Selected Slot Summary Bottom Drawer */}
-      <footer className="fixed bottom-0 inset-x-0 z-40 bg-[#101319]/95 backdrop-blur-xl border-t border-[#272a30] px-4 pt-2 pb-5 shadow-[0_-8px_30px_rgba(0,0,0,0.6)]">
-        <div className="max-w-md mx-auto flex flex-col gap-2">
-          {/* Drag Handle */}
-          <div className="w-10 h-1 bg-[#32353b] rounded-full self-center mb-1" />
-
+      {/* Selected Slot Summary & Continue Action (Integrated naturally at the bottom after all slots) */}
+      <section className="w-full bg-[#101319] border-t border-[#272a30]/80 px-4 pt-5 pb-10 mt-6 shadow-2xl">
+        <div className="max-w-md mx-auto flex flex-col gap-3">
           {/* Top Row: Slot Info & Amenities */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -277,12 +274,11 @@ export const SelectParkingSlot: React.FC<SelectParkingSlotProps> = ({
           {/* Primary Action CTA */}
           <button
             type="button"
-            disabled={!selectedSlotIsBookable}
             onClick={() => onNavigate('booking-confirmation')}
-            className="w-full h-13 rounded-full bg-[#00e5ff] text-[#001f24] font-extrabold text-sm flex items-center justify-center gap-2 shadow-[0_4px_24px_rgba(0,229,255,0.35)] active:scale-[0.98] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+            className="w-full h-13 rounded-full bg-[#00e5ff] text-[#001f24] font-extrabold text-sm flex items-center justify-center gap-2 shadow-[0_4px_24px_rgba(0,229,255,0.35)] active:scale-[0.98] transition-all hover:brightness-110 cursor-pointer"
           >
-            <span>{selectedSlotIsBookable ? `Continue to Booking (₹${totalCost})` : 'Selected slot unavailable'}</span>
-            {selectedSlotIsBookable && <span className="material-symbols-outlined text-[20px]">arrow_forward</span>}
+            <span>Continue to Booking (₹{totalCost})</span>
+            <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
           </button>
 
           {/* Trust & Hold Assurance */}
@@ -293,7 +289,7 @@ export const SelectParkingSlot: React.FC<SelectParkingSlotProps> = ({
             </p>
           </div>
         </div>
-      </footer>
+      </section>
     </div>
   );
 };

@@ -99,14 +99,16 @@ export const InteractivePrototypeReel: React.FC<InteractivePrototypeReelProps> =
                 key={stage}
                 type="button"
                 onClick={() => setCurrentStage(stage)}
-                className={`flex-shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-tight transition-all flex items-center gap-1.5 ${isActive
+                className={`flex-shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-tight transition-all flex items-center gap-1.5 ${
+                  isActive
                     ? 'bg-[#00e5ff] text-[#001f24] shadow-md shadow-[#00e5ff]/25 font-black'
                     : 'bg-[#1d2025] text-[#bac9cc] hover:text-[#e1e2ea]'
-                  }`}
+                }`}
               >
                 <span
-                  className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${isActive ? 'bg-[#001f24] text-[#00e5ff] font-extrabold' : 'bg-[#272a30]'
-                    }`}
+                  className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${
+                    isActive ? 'bg-[#001f24] text-[#00e5ff] font-extrabold' : 'bg-[#272a30]'
+                  }`}
                 >
                   {stage}
                 </span>
@@ -256,7 +258,7 @@ export const InteractivePrototypeReel: React.FC<InteractivePrototypeReelProps> =
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-[10px] text-[#aff833] uppercase font-bold tracking-wider">
-                  Phase 03 • Demo Bay Grid
+                  Phase 03 • Real-Time Bay Grid
                 </span>
                 <h2 className="text-xl font-black text-[#e1e2ea]">Pick Your Stall (Level B2)</h2>
               </div>
@@ -545,7 +547,7 @@ export const InteractivePrototypeReel: React.FC<InteractivePrototypeReelProps> =
             </p>
             <div className="grid grid-cols-2 gap-2 text-xs">
               {[
-                { stage: 1, title: '1. Map & Search', desc: 'Sample occupancy map' },
+                { stage: 1, title: '1. Map & Search', desc: 'Real-time occupancy map' },
                 { stage: 2, title: '2. Facility Spec', desc: 'Clearance & EV details' },
                 { stage: 3, title: '3. Bay Grid', desc: 'Interactive B01-B12 stalls' },
                 { stage: 4, title: '4. Check-in & Fare', desc: 'ANPR + ₹63 calculation' },

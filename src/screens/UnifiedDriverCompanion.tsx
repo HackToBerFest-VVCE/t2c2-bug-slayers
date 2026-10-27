@@ -441,44 +441,6 @@ export const UnifiedDriverCompanion: React.FC<UnifiedDriverCompanionProps> = ({
           </button>
         </div>
       </aside>
-
-      {/* Unified Bottom Nav */}
-      <nav className="fixed bottom-0 w-full z-40 bg-[#080B10]/95 backdrop-blur-xl border-t border-[#272a30]/60 shadow-[0_-8px_24px_rgba(0,0,0,0.6)]">
-        <div className="flex items-center justify-around h-16 px-1">
-          <button
-            type="button"
-            onClick={() => onNavigate('journey')}
-            className="flex-1 min-h-[48px] flex flex-col items-center justify-center gap-1 text-[#bac9cc] hover:text-[#e1e2ea] transition-colors"
-          >
-            <span className="material-symbols-outlined text-[22px]">explore</span>
-            <span className="text-[11px] font-medium tracking-tight">Discover</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate('driver-companion')}
-            className="flex-1 min-h-[48px] flex flex-col items-center justify-center gap-1 text-[#00e5ff] font-bold transition-colors"
-          >
-            <span className="material-symbols-outlined text-[22px]">drive_eta</span>
-            <span className="text-[11px] tracking-tight">Active</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate('my-bookings')}
-            className="flex-1 min-h-[48px] flex flex-col items-center justify-center gap-1 text-[#bac9cc] hover:text-[#e1e2ea] transition-colors"
-          >
-            <span className="material-symbols-outlined text-[22px]">receipt_long</span>
-            <span className="text-[11px] font-medium tracking-tight">Activity</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate('parking-details')}
-            className="flex-1 min-h-[48px] flex flex-col items-center justify-center gap-1 text-[#bac9cc] hover:text-[#e1e2ea] transition-colors"
-          >
-            <span className="material-symbols-outlined text-[22px]">account_circle</span>
-            <span className="text-[11px] font-medium tracking-tight">Profile</span>
-          </button>
-        </div>
-      </nav>
     </div>
   );
 };

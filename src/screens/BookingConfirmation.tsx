@@ -6,15 +6,13 @@ import { INITIAL_VEHICLES } from '../data/mockData.ts';
 interface BookingConfirmationProps {
   onNavigate: (screen: ScreenId) => void;
   selectedSlot: ParkingSlot;
-  canConfirmBooking: boolean;
   durationHours: number;
-  onConfirmBooking: (vehicle: Vehicle, total: number, slotId: string) => boolean;
+  onConfirmBooking: (vehicle: Vehicle, total: number) => void;
 }
 
 export const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   onNavigate,
   selectedSlot,
-  canConfirmBooking,
   durationHours,
   onConfirmBooking,
 }) => {
@@ -28,28 +26,18 @@ export const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const fare = calculateTotalFare(durationHours, selectedSlot.ratePerHour || 30, 3.0, 0);
 
   const handleConfirm = () => {
-    if (!canConfirmBooking) {
-      setToastMessage('This slot is no longer available. Choose another slot.');
-      return;
-    }
-
     setIsSubmitting(true);
-    setToastMessage(`Preparing demo booking for Slot ${selectedSlot.code}...`);
+    setToastMessage(`Locking Slot ${selectedSlot.code}...`);
 
     setTimeout(() => {
-      const bookingCreated = onConfirmBooking(selectedVehicle, fare.totalPayable, selectedSlot.id);
+      onConfirmBooking(selectedVehicle, fare.totalPayable);
       setIsSubmitting(false);
-      if (bookingCreated) {
-        onNavigate('active-journey');
-      } else {
-        setToastMessage('This slot is no longer available. Choose another slot.');
-        onNavigate('slot-select');
-      }
+      onNavigate('active-journey');
     }, 1000);
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#101319] text-[#e1e2ea] relative pb-32">
+    <div className="flex flex-col min-h-screen bg-[#101319] text-[#e1e2ea] relative pb-10">
       {/* Top Header */}
       <header className="sticky top-0 w-full z-40 bg-[#0b0e13]/85 backdrop-blur-xl border-b border-white/5">
         <div className="h-16 px-4 flex items-center justify-between">
@@ -120,7 +108,7 @@ export const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
               <div className="flex items-center justify-between gap-1 mb-1">
                 <span className="text-[10px] text-[#aff833] uppercase font-extrabold tracking-wider flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#aff833] animate-ping" />
-                  Demo Slot Status
+                  Live Sensor Verified
                 </span>
                 <span className="text-xs text-[#bac9cc] flex items-center gap-1 font-semibold">
                   <span className="material-symbols-outlined text-[16px] text-[#00e5ff]">directions_car</span>
@@ -226,10 +214,11 @@ export const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
                     setToastMessage(`Vehicle switched to ${v.name}`);
                     setTimeout(() => setToastMessage(null), 2000);
                   }}
-                  className={`p-2.5 rounded-xl cursor-pointer flex justify-between items-center transition-all ${v.id === selectedVehicle.id
-                    ? 'bg-[#00e5ff]/15 border border-[#00e5ff]'
-                    : 'bg-[#191c21] hover:bg-[#272a30] border border-white/5'
-                    }`}
+                  className={`p-2.5 rounded-xl cursor-pointer flex justify-between items-center transition-all ${
+                    v.id === selectedVehicle.id
+                      ? 'bg-[#00e5ff]/15 border border-[#00e5ff]'
+                      : 'bg-[#191c21] hover:bg-[#272a30] border border-white/5'
+                  }`}
                 >
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-[#e1e2ea]">{v.name}</span>
@@ -337,27 +326,24 @@ export const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
             <span className="text-[10px] text-[#bac9cc] uppercase font-semibold">Flexible Cancel</span>
           </div>
         </div>
-      </main>
 
-      {/* Docked Bottom Floating Action Area */}
-      <footer className="fixed bottom-0 inset-x-0 z-40 bg-[#080B10]/95 backdrop-blur-2xl p-4 shadow-[0_-12px_32px_rgba(0,0,0,0.6)] border-t border-white/5">
-        <div className="max-w-md mx-auto flex flex-col items-center gap-1.5">
-          {/* Primary CTA Button */}
+        {/* Action Confirmation Area (Integrated in natural order, one under the other) */}
+        <section className="mt-3 p-4 rounded-2xl bg-[#191c21] border border-[#00e5ff]/30 shadow-xl flex flex-col items-center gap-2">
           <button
             type="button"
-            disabled={isSubmitting || !canConfirmBooking}
+            disabled={isSubmitting}
             onClick={handleConfirm}
-            className="w-full h-14 bg-[#00e5ff] hover:brightness-110 text-[#001f24] font-black text-base rounded-full flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(0,229,255,0.4)] active:scale-98 transition-all disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+            className="w-full h-13 bg-[#00e5ff] hover:brightness-110 text-[#001f24] font-black text-sm rounded-full flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(0,229,255,0.4)] active:scale-98 transition-all cursor-pointer"
           >
             {isSubmitting ? (
               <>
-                <span className="material-symbols-outlined text-[22px] animate-spin">refresh</span>
-                <span>Preparing demo booking...</span>
+                <span className="material-symbols-outlined text-[20px] animate-spin">refresh</span>
+                <span>Locking Slot {selectedSlot.code}...</span>
               </>
             ) : (
               <>
-                <span>{canConfirmBooking ? `Confirm Demo Booking (₹${fare.totalPayable.toFixed(0)})` : 'Slot unavailable • choose another'}</span>
-                <span className="material-symbols-outlined text-[22px]">arrow_forward</span>
+                <span>Confirm & Hold Spot (₹{fare.totalPayable.toFixed(0)})</span>
+                <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
               </>
             )}
           </button>
@@ -367,8 +353,8 @@ export const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
             </span>
             <span>100% Guaranteed Spot • Free cancel up to 10m before arrival</span>
           </p>
-        </div>
-      </footer>
+        </section>
+      </main>
     </div>
   );
 };

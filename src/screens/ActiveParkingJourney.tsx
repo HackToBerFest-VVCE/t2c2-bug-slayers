@@ -20,9 +20,10 @@ export const ActiveParkingJourney: React.FC<ActiveParkingJourneyProps> = ({ onNa
 
   const handleStartGps = () => {
     setGpsActive(true);
-    setToastMessage('Launching GPS Navigation & Ingress Radar...');
+    setToastMessage('Launching Real Google Maps GPS Navigation...');
+    window.open('https://www.google.com/maps/dir/?api=1&destination=12.3051,76.6551&travelmode=driving', '_blank');
     setTimeout(() => {
-      setToastMessage('Turn-by-turn HUD active: Head South toward Amba Vilas Gate.');
+      setToastMessage('Turn-by-turn active: Head South toward Palace South Gate.');
     }, 1500);
     setTimeout(() => setToastMessage(null), 4000);
   };

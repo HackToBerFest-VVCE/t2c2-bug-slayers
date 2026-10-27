@@ -25,14 +25,6 @@ export interface FareCalculation {
   totalPayable: number;
 }
 
-export function isSlotSelectable(status: SlotStatus): boolean {
-  return status === 'available';
-}
-
-export function isSlotBookable(status: SlotStatus): boolean {
-  return status === 'selected';
-}
-
 export function calculateParkingFee(baseRatePerHour: number, hours: number): number {
   if (hours <= 0) return 0;
   return baseRatePerHour * hours;

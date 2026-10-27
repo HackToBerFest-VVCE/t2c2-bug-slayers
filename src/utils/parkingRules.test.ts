@@ -6,8 +6,6 @@ import {
   countAvailableSlots,
   countSlotsByStatus,
   getStatusIndicatorDetails,
-  isSlotBookable,
-  isSlotSelectable,
   ParkingSlot,
 } from './parkingRules.ts';
 
@@ -59,16 +57,4 @@ test('getStatusIndicatorDetails returns appropriate color indicators', () => {
   const res = getStatusIndicatorDetails('reserved');
   assert.equal(res.color, '#ffb300');
   assert.equal(res.isSelectable, false);
-});
-
-test('slot selection and booking only allow valid slot statuses', () => {
-  assert.equal(isSlotSelectable('available'), true);
-  assert.equal(isSlotSelectable('selected'), false);
-  assert.equal(isSlotSelectable('occupied'), false);
-  assert.equal(isSlotSelectable('reserved'), false);
-
-  assert.equal(isSlotBookable('available'), false);
-  assert.equal(isSlotBookable('selected'), true);
-  assert.equal(isSlotBookable('occupied'), false);
-  assert.equal(isSlotBookable('reserved'), false);
 });
